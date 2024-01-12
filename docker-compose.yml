@@ -32,8 +32,8 @@ services:
     ports:
       - 3100:3100
     volumes:
-     - ./data/loki/local-config.yml:/etc/loki/local-config.yaml
-    command: -config.file=/etc/loki/local-config.yaml
+     - ./data/loki/loki-config.yml:/etc/loki/loki-config.yaml
+    command: -config.file=/etc/loki/loki-config.yaml
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -47,8 +47,8 @@ services:
     restart: always
     volumes:
       - /var/log:/var/log
-      - ./data/promtail/config/config.yml:/etc/promtail/config.yml
-    command: -config.file=/etc/promtail/config.yml
+      - ./data/promtail/config/promtail-config.yml:/etc/promtail/promtail-config.yml
+    command: -config.file=/etc/promtail/promtail-config.yml
     depends_on:
       - loki
     networks:
