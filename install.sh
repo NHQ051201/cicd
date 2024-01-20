@@ -8,7 +8,7 @@ echo "Data has been created"
 
 echo "Copying essential configuration"
 cp loki-config.yml data/loki
-cp promtail-config.yml data/pronmtail
+cp promtail-config.yml data/promtail
 cp prometheus.yml data/prometheus
 echo "Done"
 
