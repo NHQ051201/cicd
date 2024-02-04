@@ -31,6 +31,8 @@
 cd cicd
 ./install.sh
 ```
+- To make Prometheus work, you need to install Node Exporter on nodes (devices) you want to monitor.
+- Refer to this guide for install and setup: https://prometheus.io/docs/guides/node-exporter/
 
 ## 3. Uninstallation
 ```
