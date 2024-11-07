@@ -33,7 +33,7 @@ services:
       - 3100:3100
     volumes:
      - ./data/loki/loki-config.yml:/etc/loki/loki-config.yaml
-    command: -config.file=/etc/loki/loki-config.yaml
+    command: -config.expand-env=true -config.file=/etc/loki/loki-config.yaml
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
