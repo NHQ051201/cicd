@@ -7,9 +7,9 @@ global:
 # Alertmanager configuration
 alerting:
   alertmanagers:
-    - static_configs:
-        - targets:
-          - alertmanager:9093
+    - scheme: http
+      static_configs:
+        - targets: [ 'alertmanager:9093' ]
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -26,4 +26,4 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["192.168.171.130:9091"]
+      - targets: ["192.168.171.130:9100"]
