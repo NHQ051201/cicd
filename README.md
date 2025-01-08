@@ -6,7 +6,7 @@
 - make sure you have sudo permission
 
 ## 2. Installation
-- Change config files to your device IP address:
+- Change config files to your device IP address and correct information:
   - promtail-config.yml:
     ```
     clients:
@@ -25,6 +25,17 @@
 
     static_configs:
       - targets: ["IP:PORT"]
+    ```
+  - alertmanager
+    ```
+    receivers:
+      - name: 'mail'
+        email_configs:
+          - smarthost: 'smtp.gmail.com:465'
+            auth_username: 'your_mail@gmail.com'
+            auth_password: ""
+            from: 'your_mail@gmail.com'
+            to: 'some_mail@gmail.com'
     ```
 - Install
 ```
