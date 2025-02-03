@@ -88,18 +88,6 @@ services:
     networks:
       - cicd
 
-  jfrog:
-    image: docker.bintray.io/jfrog/artifactory-cpp-ce:latest
-    container_name: jfrog
-    restart: unless-stopped
-    ports:
-      - 8081:8081
-      - 8082:8082
-    volumes:
-      - ./data/jfrog/artifactory:/var/opt/jfrog/artifactory
-    networks:
-      - cicd
-
 volumes:
   jenkins: {}
   prometheus: {}
@@ -107,7 +95,6 @@ volumes:
   promtail: {}
   grafana: {}
   alertmanager: {}
-  jfrog: {}
 
 networks:
   cicd:

@@ -3,6 +3,6 @@
 echo "Starting to uninstall"
 
 docker-compose down -v
-sudo rm -rf data
+sudo rm -rf data artifactory*
 
 echo "Done"
