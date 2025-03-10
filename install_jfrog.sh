@@ -17,6 +17,10 @@ curl -L "https://releases.jfrog.io/artifactory/bintray-artifactory/org/artifacto
 latest_dir=$(tar -tf jfrog-artifactory-compose.tar.gz | head -n 1 | cut -d/ -f1)
 tar -xvzf jfrog-artifactory-compose.tar.gz
 rm -rf jfrog-artifactory-compose.tar.gz
+cd "$latest_dir"
+ls -l
+sudo ./config.sh
+docker-compose up -d
 
 echo "--------------------------------------------------------"
 echo "All done and ready to use"

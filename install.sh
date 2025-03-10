@@ -18,10 +18,6 @@ echo "Done"
 echo "--------------------------------------------------------"
 echo "Start up containers"
 docker-compose up -d
-cd "$latest_dir"
-ls -l
-sudo ./config.sh
-docker-compose up -d
 
 echo "--------------------------------------------------------"
 echo "All done and ready to use"
