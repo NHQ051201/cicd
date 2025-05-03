@@ -3,8 +3,8 @@
 echo "Starting to install"
 
 echo "--------------------------------------------------------"
-echo "Creating data"
-mkdir -p data/grafana data/jenkins data/loki data/prometheus data/promtail data/alertmanager/config data/nginx
+echo "Creating data path"
+mkdir -p data/grafana data/loki data/prometheus data/promtail data/alertmanager/config
 echo "Data has been created"
 
 echo "--------------------------------------------------------"
@@ -17,7 +17,7 @@ echo "Done"
 
 echo "--------------------------------------------------------"
 echo "Start up containers"
-docker-compose up -d
+docker-compose up grafana loki prometheus promtail alertmanager -d
 
 echo "--------------------------------------------------------"
 echo "All done and ready to use"
