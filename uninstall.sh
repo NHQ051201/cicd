@@ -2,8 +2,8 @@
 
 echo "Starting to uninstall"
 
-docker-compose down -v
+# docker-compose down -v
+./dockerclearall.sh
 sudo rm -rf data artifactory*
-# ./dockerclearall.sh
 
 echo "Done"
