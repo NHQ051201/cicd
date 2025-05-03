@@ -17,7 +17,7 @@ echo "Done"
 
 echo "--------------------------------------------------------"
 echo "Start up containers"
-docker-compose up grafana loki prometheus promtail alertmanager -d
+docker-compose up -d grafana loki prometheus promtail alertmanager
 
 echo "--------------------------------------------------------"
 echo "All done and ready to use"

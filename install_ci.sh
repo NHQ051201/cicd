@@ -9,7 +9,7 @@ echo "Data has been created"
 
 echo "--------------------------------------------------------"
 echo "Start up containers"
-docker-compose up jenkins nginx -d
+docker-compose up -d jenkins nginx
 
 echo "--------------------------------------------------------"
 echo "All done and ready to use"
