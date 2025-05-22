@@ -4,7 +4,7 @@ echo "Starting to install"
 
 echo "--------------------------------------------------------"
 echo "Creating data path"
-mkdir -p data/ansible
+mkdir -p ~/ansible_config
 echo "Data has been created"
 
 echo "--------------------------------------------------------"

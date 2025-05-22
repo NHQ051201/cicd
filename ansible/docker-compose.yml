@@ -9,6 +9,6 @@ services:
     container_name: ansible
     restart: unless-stopped
     volumes: 
-      - ../data/ansible:/app/
+      - ~/ansible_config:/app/
     ports:
       - "6000:22"
