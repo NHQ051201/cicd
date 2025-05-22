@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  ansible:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: ansible:test
+    container_name: ansible
+    restart: unless-stopped
+    volumes: 
+      - ../data/ansible:/app/
+    ports:
+      - "6000:22"
