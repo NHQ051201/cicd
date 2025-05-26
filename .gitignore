@@ -1,1 +1,8 @@
 data/
+nginx-docker/filebrowser/
+nginx-docker/storage/
+nginx-docker/certbot/*
+nginx-docker/config/certs/*
+nginx-docker/config/conf.d.disable/*
+nginx-docker/config/log/*
+nginx-docker/join_swarm.txt

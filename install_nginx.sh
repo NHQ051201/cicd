@@ -2,16 +2,12 @@
 
 set -e
 
-echo "Starting to install"
-
-echo "--------------------------------------------------------"
-echo "Creating data path"
-mkdir -p data/jenkins
-echo "Data has been created"
+echo "Starting to install nginx"
 
 echo "--------------------------------------------------------"
 echo "Start up containers"
-docker-compose up -d jenkins
+cd nginx-docker
+docker-compose up -d nginx certbot
 
 echo "--------------------------------------------------------"
 echo "All done and ready to use"

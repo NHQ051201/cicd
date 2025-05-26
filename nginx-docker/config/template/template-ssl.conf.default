@@ -1,0 +1,58 @@
+server {
+        listen       80;
+        server_name  www.template.com template.com;
+        return       301 https://template.com$request_uri;
+    access_log off;
+}
+
+server {
+    listen       443 ssl;
+    server_name  www.template.com template.com;
+    ssl_certificate /opt/certs/template.com.pem;
+    ssl_certificate_key /opt/certs/template.com.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+    ssl_protocols TLSv1.1 TLSv1.2;
+
+        access_log  /opt/log/nginx/template.com-access.log;
+        error_log /opt/log/nginx/template.com-error.log error;
+        client_max_body_size 10m;
+        root   /opt/www/template.com;
+
+        location / {
+                index  index.php index.html index.htm;
+                try_files $uri $uri/ /index.php?$args;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|woff)$ {
+                expires max;
+                log_not_found off;
+        }
+
+        location ~ ^/(favicon.ico|robots.txt) {
+                log_not_found off;
+                access_log off;
+        }
+
+        location /wp-content/uploads/ {
+                location ~ .*\.(php)?$
+                {
+                        deny all;
+                }
+        }
+
+        location ~ ^/(php-status)$ {
+                access_log off;
+                include fastcgi_params;
+                fastcgi_pass   unix:/opt/tmp/php-fpm-template.sock;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        }
+
+        location ~ \.php$ {
+                fastcgi_pass   unix:/opt/tmp/php-fpm-template.sock;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+                include        fastcgi_params;
+        }
+}
