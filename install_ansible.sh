@@ -11,20 +11,11 @@ echo "Data has been created"
 
 echo "--------------------------------------------------------"
 echo "Setup command alias"
-FUNC_NAME="d-ansible"
-BASHRC="$HOME/.bashrc"
-if ! grep -q "$FUNC_NAME()" "$BASHRC"; then
-  cat << 'EOF' >> "$BASHRC"
-
-# Docker Ansible shortcut
-d-ansible() {
-  docker exec -it ansible bash -c "$*"
-}
-EOF
-  echo "Alias function '$FUNC_NAME' added to $BASHRC"
-else
-  echo "Alias function '$FUNC_NAME' already exists in $BASHRC"
-fi
+sudo sh -c 'cat << "EOF" > /usr/local/bin/d-ansible
+#!/bin/sh
+docker exec -it ansible bash -c "$*"
+EOF'
+sudo chmod +x /usr/local/bin/d-ansible
 
 echo "--------------------------------------------------------"
 echo "Start up containers"
