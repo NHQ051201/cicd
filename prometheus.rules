@@ -1,0 +1,59 @@
+groups:
+- name: test_project
+  rules:
+
+  # Alert for any instance that is unreachable for >2 minutes.
+  - alert: AppDown
+    expr: sum(node_systemd_unit_state{job=~"node-pgplatform-.*-apps.?", state="active", name=~"(?i:(.*Prod).*)"}) by (name) == 0
+    for: 2m
+    labels:
+      severity: 'critical'
+      project: 'test_project'
+    annotations:
+      summary: "App {{ $labels.name }} down"
+      description: "{{ $labels.name }} of job {{ $labels.job }} has been down for more than 2 minutes."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: AppRestart
+    expr: sum(node_systemd_service_restart_total{job=~"node-pgplatform-.*-apps.?", name=~"(?i:(.*Prod).*)"}) by (name) > 0
+    for: 2m
+    labels:
+      severity: 'critical'
+      project: 'test_project'
+    annotations:
+      summary: "App {{ $labels.name }} is crashing"
+      description: "{{ $labels.name }} is crashing."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: RmqQueueMessagesHigh
+    expr: rabbitmq_queue_messages{job=~"node-pgplatform-.*-services.?", queue=~"deposit_balance|deposit_incoming" } >= 50
+    for: 2m
+    labels:
+      severity: 'critical'
+      project: 'test_project'
+    annotations:
+      summary: "High amount of Rmq messages for {{ $labels.job }}"
+      description: "{{ $labels.job }} High RMQ msgs."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: RmqQueueMessagesHigh
+    expr: sum(rabbitmq_queue_messages_ready{job=~"node-pgplatform-.*-services.?"}) >= 8000
+    for: 2m
+    labels:
+      severity: 'critical'
+      project: 'test_project'
+    annotations:
+      summary: "High amount of Rmq messages for {{ $labels.job }}"
+      description: "{{ $labels.job }} High RMQ msgs."
+      dashboard_url: "http://192.168.171.133:3000"
+
+#  - alert: AppRestart
+#    expr: changes(node_systemd_unit_state{job="node-trove-apps", name=~"(?i:(trove).*)"}[2m]) > 0
+#    for: 2m
+#    labels:
+#      severity: 'critical'
+#      project: 'trove'
+#    annotations:
+#      summary: "App {{ $labels.name }} is crashing"
+#      description: "{{ $labels.name }} is crashing."
+#      dashboard_url: "http://monitor.vact.live"
