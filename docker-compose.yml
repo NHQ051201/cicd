@@ -42,6 +42,10 @@ services:
       - 9090:9090
     volumes:
       - ./data/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
     networks:
       - cicd
   
