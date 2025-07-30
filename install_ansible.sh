@@ -13,7 +13,7 @@ echo "--------------------------------------------------------"
 echo "Setup command alias"
 sudo sh -c 'cat << "EOF" > /usr/local/bin/d-ansible
 #!/bin/sh
-docker exec -it ansible bash -c "$*"
+docker exec -i ansible bash -c "$*"
 EOF'
 sudo chmod +x /usr/local/bin/d-ansible
 
