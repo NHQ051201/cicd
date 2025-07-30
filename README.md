@@ -9,18 +9,18 @@ This can take up to 6 vms to run smoothly
 
 ## 2. Installation
 
-### - To install jenkins
+### To install jenkins
 ```
 ./cicd/install_jenkins.sh
 ```
 
-### - To install jfrog
+### To install jfrog
 Jfrog require at least 4 cores CPU and 6GB of Ram for the minium. Default version used is 7.49.8 (can be changed while setting)
 ```
 ./cicd/install_jfrog.sh
 ```
 
-### - To install monitor tools
+### To install monitor tools
 The monitoring tools including: grafana, prometheus, promtail and alertmanager.
 
 To make Prometheus work, you need to install Node Exporter on nodes (devices) you want to monitor.
@@ -30,7 +30,7 @@ Refer to this guide for install and setup: https://prometheus.io/docs/guides/nod
 ./cicd/install_monitor.sh
 ```
 
-### - To install ansible
+### To install ansible
 This installation will write provide a command d-ansible stands for docker exec -i ansible bash -c ""
 ```
 ./cicd/install_ansible.sh
