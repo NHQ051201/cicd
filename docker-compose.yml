@@ -1,16 +1,6 @@
 version: '3'
 
 services:
-  # nginx:
-  #   image: nginx:latest
-  #   container_name: nginx
-  #   restart: unless-stopped
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - ./data/nginx:/etc/nginx
-  #   networks:
-  #     - cicd
 
   jenkins:
     image: jenkins/jenkins:latest
