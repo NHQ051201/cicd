@@ -21,8 +21,10 @@ Jfrog require at least 4 cores CPU and 6GB of Ram for the minium. Default versio
 ```
 
 ### To install monitor tools
-The monitoring tools including: grafana, prometheus, promtail and alertmanager
+The monitoring tools including: grafana, prometheus, promtail and alertmanager.
+
 To make Prometheus work, you need to install Node Exporter on nodes (devices) you want to monitor.
+
 Refer to this guide for install and setup: https://prometheus.io/docs/guides/node-exporter/
 ```
 ./cicd/install_monitor.sh
