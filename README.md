@@ -109,6 +109,24 @@ There are couple ways to publish local domain to access through internet
 
 - Using localtunnel (being used in this demo) refer to this [link](https://www.npmjs.com/package/localtunnel)
 
+- Jenkins
+
+```
+start_domain_jenkins.sh
+```
+
+- Jfrog
+
+```
+start_domain_jrog.sh
+```
+
+- Monitoring tools
+
+```
+start_domain_monitor.sh
+```
+
 ## 4. Uninstallation
 ```
 ./uninstall.sh
