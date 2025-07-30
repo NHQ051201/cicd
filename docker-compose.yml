@@ -93,6 +93,19 @@ services:
     networks:
       - cicd
 
+  rancher-server:
+    image: rancher/rancher:v2.9.2
+    container_name: rancher-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /data/rancher/data:/var/lib/rancher
+    privileged: true
+    networks:
+      - cicd
+
 volumes:
   jenkins: {}
   prometheus: {}
@@ -100,6 +113,7 @@ volumes:
   promtail: {}
   grafana: {}
   alertmanager: {}
+  rancher: {}
 
 networks:
   cicd:
