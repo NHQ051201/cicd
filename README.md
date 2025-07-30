@@ -112,19 +112,19 @@ There are couple ways to publish local domain to access through internet
 ### Jenkins
 
 ```
-start_domain_jenkins.sh
+./cicd/start_domain_jenkins.sh
 ```
 
 ### Jfrog
 
 ```
-start_domain_jrog.sh
+./cicd/start_domain_jrog.sh
 ```
 
 ### Monitoring tools
 
 ```
-start_domain_monitor.sh
+./cicd/start_domain_monitor.sh
 ```
 
 ## 4. Uninstallation
