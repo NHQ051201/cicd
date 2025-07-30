@@ -86,6 +86,8 @@ Change config files to your device IP address and correct information:
 
 This installation will write provide a command d-ansible stands for docker exec -i ansible bash -c ""
 
+Ansible job can be check in ansible/sample-config
+
 ```
 ./cicd/install_ansible.sh
 ```
