@@ -1,0 +1,8 @@
+---
+# tasks file for ecommerce-be role
+
+- name: Deploy ecommerce backend
+  shell: |
+    kubectl apply -f ./repo/Fullstack-Ecommerce-Web/k8s/ecommerce-be.yml
+  register: ns_result
+  changed_when: "'created' in ns_result.stdout"

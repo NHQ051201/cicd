@@ -1,0 +1,6 @@
+---
+- name: Deploy Namespace
+  hosts: k8s-master
+  remote_user: ubuntu
+  roles:
+    - ecommerce-namespace

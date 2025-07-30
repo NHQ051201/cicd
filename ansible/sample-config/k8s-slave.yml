@@ -1,0 +1,5 @@
+---
+- name: K8s slave setup
+  hosts: k8s-slave
+  roles:
+    - k8s-slave

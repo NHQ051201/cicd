@@ -1,0 +1,9 @@
+---
+# tasks file for roles/k8s-slave
+- name: Join worker node to the Kubernetes cluster
+  ansible.builtin.shell: >
+    kubeadm join {{ k8s_master_ip }}:6443
+    --token {{ kubeadm_token }}
+    --discovery-token-ca-cert-hash sha256:{{ kubeadm_cert_hash }}
+    --cri-socket {{ kube_cri_socket }}
+  when: kubeadm_token is defined and kubeadm_cert_hash is defined

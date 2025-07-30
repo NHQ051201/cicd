@@ -1,0 +1,6 @@
+---
+- name: Deploy servers setup
+  hosts: k8s-master k8s-slave
+  become: true
+  roles:
+    - deploy-server

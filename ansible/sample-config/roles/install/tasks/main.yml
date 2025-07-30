@@ -1,0 +1,10 @@
+# tasks file for roles/install
+
+- name: Install required packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - net-tools
+  become: yes

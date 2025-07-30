@@ -1,0 +1,12 @@
+---
+# handlers file for roles/k8s-slave
+- name: Initialize Kubernetes Slave Node
+  hosts: k8s-slave
+  become: true
+  tasks:
+    - name: Run kubeadm init
+      ansible.builtin.shell: >
+        kubeadm init
+        --apiserver-advertise-address={{ k8s_slave_ip }}
+        --pod-network-cidr={{ kube_pod_cidr }}
+        --cri-socket {{ kube_cri_socket }}

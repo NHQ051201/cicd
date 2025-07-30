@@ -1,0 +1,6 @@
+---
+- name: K8s master setup
+  hosts: k8s-master
+  become: true
+  roles:
+    - k8s-master

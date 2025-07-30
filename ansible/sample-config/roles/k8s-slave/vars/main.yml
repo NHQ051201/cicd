@@ -1,0 +1,7 @@
+---
+# vars file for roles/k8s-slave
+
+k8s_slave_ip: "192.168.171.135"
+k8s_master_ip: "192.168.171.134"
+kube_pod_cidr: "172.24.0.0/16"
+kube_cri_socket: "unix:///var/run/cri-dockerd.sock"

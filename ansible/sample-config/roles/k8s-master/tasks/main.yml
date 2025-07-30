@@ -1,0 +1,30 @@
+---
+# tasks file for roles/k8s-master
+
+- name: Initialize Kubernetes Master Node
+  ansible.builtin.shell: >
+    kubeadm init
+    --apiserver-advertise-address={{ k8s_master_ip }}
+    --pod-network-cidr={{ kube_pod_cidr }}
+    --cri-socket {{ kube_cri_socket }}
+  args:
+    creates: /etc/kubernetes/admin.conf  # Ensure idempotency
+
+- name: Get kubeadm join command
+  ansible.builtin.shell: kubeadm token create --print-join-command
+  register: join_cmd_raw
+
+- name: Parse token and cert hash
+  ansible.builtin.set_fact:
+    kubeadm_join_command: "{{ join_cmd_raw.stdout }}"
+    kubeadm_token: "{{ join_cmd_raw.stdout.split()[3] }}"
+    kubeadm_cert_hash: "{{ join_cmd_raw.stdout.split()[5] }}"
+
+- name: Share join token and cert hash with worker nodes
+  ansible.builtin.set_fact:
+    kubeadm_token: "{{ kubeadm_token }}"
+    kubeadm_cert_hash: "{{ kubeadm_cert_hash }}"
+    kube_apiserver_ip: "{{ k8s_master_ip }}"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  with_items: "{{ groups['k8s-slave'] }}"

@@ -1,0 +1,8 @@
+---
+# handlers file for roles/k8s-master
+- name: Initialize Kubernetes Master Node
+  hosts: k8s-master
+  tasks:
+    - name: Get pods
+      ansible.builtin.shell: >
+        kubectl get pods

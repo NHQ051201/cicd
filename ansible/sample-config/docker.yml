@@ -1,0 +1,10 @@
+---
+- name: Docker setup
+  hosts: k8s-master, k8s-slave1
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  vars:
+    ansible_become_password: "{{ sudo_pass }}"
+  roles:
+    - docker

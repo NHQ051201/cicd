@@ -1,0 +1,43 @@
+---
+# tasks file for roles/ecommerce-namespace
+
+- name: Clone the repo
+  shell: |
+    cd repo
+    rm -rf Fullstack-Ecommerce-Web/
+    echo "$REPO_URL"
+    git clone "$REPO_URL"
+  environment:
+    REPO_URL: "{{ lookup('env', 'REPO_URL') }}"
+  register: clone_result
+  changed_when: "'Cloning into' in clone_result.stdout"
+
+- name: Apply namespace config
+  shell: |
+    kubectl get ns fullstack-app
+    kubectl apply -f ./repo/Fullstack-Ecommerce-Web/k8s/ecommerce-namespace.yml
+  register: ns_result
+  changed_when: "'created' in ns_result.stdout"
+
+- name: Show working directory (from pwd)
+  debug:
+    msg: "Working directory is: {{ ns_result.stdout }}"
+
+- name: Check if the secret exists
+  shell: |
+    kubectl get secret local-registry -n "$NAMESPACE"
+  environment:
+    NAMESPACE: "{{ lookup('env', 'NAMESPACE') }}"
+  register: secret_check
+  ignore_errors: true
+
+- name: Set registry secret
+  shell: |
+    set -e
+    kubectl create secret docker-registry local-registry --docker-server="$DOCKER_REGISTRY" --docker-username="$USERNAME" --docker-password="$PASSWORD" -n "$NAMESPACE"
+  environment:
+    DOCKER_REGISTRY: "{{ lookup('env', 'DOCKER_REGISTRY') }}"
+    USERNAME: "{{ lookup('env', 'USERNAME') }}"
+    PASSWORD: "{{ lookup('env', 'PASSWORD') }}"
+    NAMESPACE: "{{ lookup('env', 'NAMESPACE') }}"
+  when: "secret_check.rc != 0"

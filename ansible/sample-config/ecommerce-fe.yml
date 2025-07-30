@@ -1,0 +1,6 @@
+---
+- name: Deploy Frontend
+  hosts: k8s-master
+  remote_user: ubuntu
+  roles:
+    - ecommerce-fe
