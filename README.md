@@ -8,38 +8,6 @@ This can take up to 6 vms to run smoothly
 - make sure you have sudo permission
 
 ## 2. Installation
-- Change config files to your device IP address and correct information:
-  - promtail-config.yml:
-    ```
-    clients:
-      - url: http://loki:3100/loki/api/v1/push
-    ```
-  - loki-config.yml:
-    ```
-    alertmanager_url: http://localhost:9093
-    ```
-  - prometheus.yml:
-    ```
-    - job_name: "host"
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ["IP:PORT"]
-    ```
-  - alertmanager
-    ```
-    receivers:
-      - name: 'mail'
-        email_configs:
-          - smarthost: 'smtp.gmail.com:465'
-            auth_username: 'your_mail@gmail.com'
-            auth_password: ""
-            from: 'your_mail@gmail.com'
-            to: 'some_mail@gmail.com'
-    ```
-- Install
 
 ### To install jenkins
 ```
