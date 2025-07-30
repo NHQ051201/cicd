@@ -74,6 +74,7 @@ Change config files to your device IP address and correct information:
             from: 'your_mail@gmail.com'
             to: 'some_mail@gmail.com'
 ```
+3. Grafana sample config can be refer in template/grafana
 
 ```
 ./cicd/install_monitor.sh

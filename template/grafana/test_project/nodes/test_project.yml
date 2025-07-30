@@ -1,0 +1,3 @@
+- targets: ['node-exporter:9100', 'blackbox-exporter:9101'] # change to correct IP
+  labels:
+    job: node-test-project # change to correct name

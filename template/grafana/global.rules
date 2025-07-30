@@ -1,0 +1,74 @@
+groups:
+- name: AllInstances
+  rules:
+
+  # Alert for any instance that is unreachable for >2 minutes.
+  - alert: InstanceDown
+    expr: up == 0
+    for: 2m
+    labels:
+      severity: 'critical'
+    annotations:
+      summary: "Instance {{ $labels.job }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: InstanceHighLoad
+    expr: 100 * (1 - avg by (job) (rate(node_cpu_seconds_total{mode="idle"}[30s]))) > 80
+    for: 5m
+    labels:
+      severity: 'critical'
+    annotations:
+      summary: "Instance {{ $labels.job }} under high load"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: InstanceHighMemoryUsage
+    expr: 100 - ((node_memory_MemAvailable_bytes * 100) / node_memory_MemTotal_bytes) > 90
+    for: 5m
+    labels:
+      severity: 'critical'
+    annotations:
+      summary: "Instance {{ $labels.job }} out of memory"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} is out of memory."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: InstanceOutOfDiskSpace
+    expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/data",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/data",fstype!="rootfs"}) > 95
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.job }} out of Disk Space at /data"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} out of Disk Space at /data."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: InstanceOutOfDiskSpace
+    expr: 100 - ((node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"}) > 90
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Instance {{ $labels.job }} out of Disk Space at /rootfs"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} out of Disk Space at /rootfs."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: HighTCP
+    expr: node_sockstat_TCP_alloc > 4000
+    for: 2m
+    labels:
+      severity: 'critical'
+    annotations:
+      summary: "Instance {{ $labels.job }} High TCP Allot"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has High TCP Allot."
+      dashboard_url: "http://192.168.171.133:3000"
+
+  - alert: HealthCheckFailed
+    expr: probe_success < 1
+    for: 2m
+    labels:
+      severity: 'critical'
+    annotations:
+      summary: "{{ $labels.org }} {{ $labels.project }} {{ $labels.route }} {{ $labels.app }} HealthCheck Failed"
+      description: "{{ $labels.app }} of {{ $labels.project }}-{{ $labels.org }}-{{ $labels.environment }}-{{ $labels.route }} Failed HealthCheck."
+      dashboard_url: "http://192.168.171.133:3000"

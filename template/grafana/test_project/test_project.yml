@@ -1,0 +1,139 @@
+scrape_configs:
+  - job_name: 'nodes-test'
+    scrape_interval: 15s
+    file_sd_configs:
+      - files:
+          - ./nodes/test*.yml
+
+  - job_name: 'nodes-test-blackbox-http'
+    scrape_timeout: 15s
+    scrape_interval: 15s
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    file_sd_configs:
+      - files:
+        - ./blackbox/test*-http-pinghosts.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: ^([^;]+;){5}[^;]+$
+        action: keep
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_target
+        replacement: $1
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_project
+        replacement: $2
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_org
+        replacement: $3
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_env
+        replacement: $4
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_app
+        replacement: $5
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_route
+        replacement: $6
+        action: replace
+      - source_labels: [__param_target]
+        target_label: target
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [__param_project]
+        target_label: project
+      - source_labels: [__param_org]
+        target_label: org
+      - source_labels: [__param_env]
+        target_label: environment
+      - source_labels: [__param_app]
+        target_label: app
+      - source_labels: [__param_route]
+        target_label: route
+      - target_label: __address__
+        replacement: prometheus-docker-blackbox-exporter-1:9115
+
+  - job_name: 'nodes-test-blackbox-grpc'
+    scrape_timeout: 15s
+    scrape_interval: 15s
+    metrics_path: /probe
+    params:
+      module: [grpc]
+    file_sd_configs:
+      - files:
+        - ./blackbox/test*-grpc-pinghosts.yml
+#    static_configs:
+#      - targets:
+#        - https://admin.vact.live/healthz;BlazorAdmin;Prod;Public
+#        - https://agent.vact.live/healthz
+    relabel_configs:
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_target
+        replacement: $1
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_project
+        replacement: $2
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_org
+        replacement: $3
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_env
+        replacement: $4
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_app
+        replacement: $5
+        action: replace
+      - source_labels: [__address__]
+        separator: ;
+        regex: (.*);(.*);(.*);(.*);(.*);(.*)
+        target_label: __param_route
+        replacement: $6
+        action: replace
+      - source_labels: [__param_target]
+        target_label: target
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [__param_project]
+        target_label: project
+      - source_labels: [__param_org]
+        target_label: org
+      - source_labels: [__param_env]
+        target_label: environment
+      - source_labels: [__param_app]
+        target_label: app
+      - source_labels: [__param_route]
+        target_label: route
+      - target_label: __address__
+        replacement: prometheus-docker-blackbox-exporter-1:9115
