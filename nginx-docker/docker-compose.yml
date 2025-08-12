@@ -27,18 +27,18 @@ services:
     entrypoint: ["sh", "-c", "while :; do sleep infinity; done"]
     restart: unless-stopped
 
-  filebrowser:
-    image: filebrowser/filebrowser:s6
-    container_name: filebrowser
-    volumes:
-      - ./storage:/srv
-      - ./filebrowser/database:/database
-      - ./filebrowser/config:/config
+  # filebrowser:
+  #   image: filebrowser/filebrowser:s6
+  #   container_name: filebrowser
+  #   volumes:
+  #     - ./storage:/srv
+  #     - ./filebrowser/database:/database
+  #     - ./filebrowser/config:/config
     # ports:
     #   - 127.0.0.1:8080:80
-    networks:
-      - nginx
-    restart: always
+    # networks:
+    #   - nginx
+    # restart: always
 
 networks:
   nginx:
