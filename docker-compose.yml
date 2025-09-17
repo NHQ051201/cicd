@@ -24,6 +24,21 @@ services:
     networks:
       - cicd
 
+  fluent-bit:
+    image: fluent/fluent-bit:3.0.0
+    container_name: fluentbit
+    hostname: ci-fluentbit
+    volumes:
+      - ./data/fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./data/fluentbit/parser.conf:/fluent-bit/etc/parser.conf
+      - /var/lib/docker/containers:/docker-logs
+
+    ports:
+      - 2020:2020
+    networks:
+      - cicd
+    restart: always
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
