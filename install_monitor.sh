@@ -11,10 +11,10 @@ echo "Data has been created"
 
 echo "--------------------------------------------------------"
 echo "Copying essential configuration"
-cp template/loki-config.yml data/loki
-cp template/promtail-config.yml data/promtail
-cp template/prometheus.yml data/prometheus
-cp template/alertmanager.yml data/alertmanager/config
+cp template/loki/loki-config.yml data/loki
+cp template/promtail/promtail-config.yml data/promtail
+cp template/prometheus/prometheus.yml data/prometheus
+cp template/alertmanager/alertmanager.yml data/alertmanager/config
 echo "Done"
 
 echo "--------------------------------------------------------"
