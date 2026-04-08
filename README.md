@@ -1,4 +1,4 @@
-# A simple CI/CD setup test
+# A simple CI/CD setup
 
 This can take up to 6 vms to run smoothly
 
