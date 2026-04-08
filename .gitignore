@@ -6,3 +6,4 @@ nginx-docker/config/certs/*
 nginx-docker/config/conf.d.disable/*
 nginx-docker/config/log/*
 nginx-docker/join_swarm.txt
+nginx-docker/config/logs/*

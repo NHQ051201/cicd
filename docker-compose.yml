@@ -5,6 +5,8 @@ services:
   jenkins:
     image: jenkins/jenkins:latest
     container_name: jenkins
+    labels:
+      name: "jenkins"
     restart: unless-stopped
     ports:
       - 8080:8080
@@ -14,6 +16,12 @@ services:
       - ./data/jenkins:/var/jenkins_home
     networks:
       - cicd
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "name"
   
   node-exporter:
     image: prom/node-exporter:latest
@@ -25,19 +33,46 @@ services:
       - cicd
 
   fluent-bit:
-    image: fluent/fluent-bit:3.0.0
-    container_name: fluentbit
-    hostname: ci-fluentbit
+    image: fluent/fluent-bit:latest
+    container_name: fluent-bit
+    user: root
+    security_opt:
+      - apparmor:docker-fluent-bit
     volumes:
-      - ./data/fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./data/fluentbit/parser.conf:/fluent-bit/etc/parser.conf
-      - /var/lib/docker/containers:/docker-logs
-
+      - ./data/fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./data/fluent-bit/parser.conf:/fluent-bit/etc/parser.conf
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/docker-logs:ro
     ports:
       - 2020:2020
     networks:
       - cicd
     restart: always
+
+  fluent-bit-shell:
+    image: fluent-bit-custom:1.0.0
+    container_name: fluent-bit-shell
+    labels:
+      name: "fluent-bit"
+    user: root
+    security_opt:
+      - apparmor:docker-fluent-bit
+    volumes:
+      - ./data/fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./data/fluent-bit/parser.conf:/fluent-bit/etc/parser.conf
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/docker-logs:ro
+    ports:
+      - 2020:2020
+    networks:
+      - cicd
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "name"
 
   prometheus:
     image: prom/prometheus:latest
